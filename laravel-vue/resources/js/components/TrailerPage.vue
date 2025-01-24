@@ -1,5 +1,5 @@
 <template>
-    <h1>Welcome to Truck Page</h1>
+    <h1>Welcome to Trailer Page</h1>
   </template>
   <script>
   export default {
