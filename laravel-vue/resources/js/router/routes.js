@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 // Components
-
 import home from '../components/Home.vue';
 import trailer from '../components/TrailerPage.vue';
-import example from '../components/Example.vue';
+import truck from '../components/TruckPage.vue';
 import notfound from '../components/NotFound.vue';
 
 const routes = [
@@ -17,8 +16,8 @@ const routes = [
         component: trailer,
     },
     {
-        path: "/example",
-        component: example,
+        path: "/truck",
+        component: truck,
     },
     {
         path: "/:pathMatch(.*)*",
@@ -29,6 +28,7 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+    linkActiveClass: 'bg-gray-700 text-white text-m',
 });
 
 export default router;

@@ -1,17 +1,90 @@
 <template>
-    <h1>Welcome to home page</h1>
+  <div class="p-6">
+    <h1 class="text-2xl font-bold mb-4">Create a New Transport Unit</h1>
+
+    <form @submit.prevent="createTransportUnit" class="space-y-4">
+      <!-- Name Input -->
+      <div>
+        <label for="name" class="block text-sm font-medium">Name</label>
+        <input
+          type="text"
+          id="name"
+          v-model="form.name"
+          class="mt-1 block w-flex  border border-gray-300 rounded-md p-2"
+          placeholder="Enter transport unit name"
+          required
+        />
+      </div>
+
+      <!-- Datatype Dropdown -->
+      <div>
+        <label for="datatype" class="block text-sm font-medium">Datatype</label>
+        <select
+          id="datatype"
+          v-model="form.datatype"
+          class="mt-1 block w-flex border border-gray-300 rounded-md p-2"
+          required
+        >
+          <option disabled value="">Select Type</option>
+          <option value="Trailer">Trailer</option>
+          <option value="Truck">Truck</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+        >
+          Create Transport Unit
+        </button>
+      </div>
+    </form>
+
+    <!-- Success Message -->
+    <div v-if="successMessage" class="mt-4 text-green-500">
+      {{ successMessage }}
+    </div>
+  </div>
 </template>
-  <script>
-  export default {
-    name: 'Home',
-  };
-  </script>
-  <style scoped>
-  h1 {
-    color: #42b983;
-    text-align: center;
-  }
-  .nav-link{
-    margin: 5px;
-  }
-  </style>
+
+<script>
+
+export default {
+  data() {
+    return {
+      form: {
+        name: "",
+        datatype: "",
+      },
+      successMessage: "",
+    };
+  },
+  methods: {
+    async createTransportUnit() {
+      try {
+        const response = await axios.post("/api/transport-units", {
+          name: this.form.name,
+          datatype: this.form.datatype,
+        });
+
+        // Clear the form and show success message
+        this.form.name = "";
+        this.form.datatype = "";
+        this.successMessage = "Transport Unit created successfully!";
+
+        console.log("Created Transport Unit:", response.data);
+      } catch (error) {
+
+        console.error("Error creating transport unit:", error);
+        alert("Failed to create transport unit. Please try again.");
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Optional styling */
+</style>

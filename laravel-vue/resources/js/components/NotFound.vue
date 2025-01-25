@@ -1,14 +1,18 @@
 <template>
-    <h1>Welcome to Truck Page</h1>
-  </template>
-  <script>
-  export default {
-    name: 'Example',
-  };
-  </script>
-  <style scoped>
-  h1 {
-    color: #42b983;
-    text-align: center;
-  }
-  </style>
+    <h1>This request endpoint is Not Found.
+    </h1>
+</template>
+
+<script>
+  export default{};
+</script>
+
+
+<style scoped>
+h1 {
+  color: red;
+  text-align: center;
+  margin-top: 200px;
+  font-size: x-large;
+}
+</style>

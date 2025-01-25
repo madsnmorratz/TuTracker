@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laravel-vue</title>
-    @vite('resources/css/app.css')
+    @vite(entrypoints: ['resources/js/app.js'])
+    @vite(entrypoints: ['resources/css/app.css'])
+
 </head>
+
 <body>
+
     <div id="app">
-        <home/>
-    </div>
+        <transport-units></transport-units>
 
-    @vite('resources/js/app.js')
+    </div>   
 
-    <!-- <script src="/js/app.js"></script> -->
 </body>
 </html>
