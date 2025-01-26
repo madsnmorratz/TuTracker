@@ -1,16 +1,32 @@
 <template>
-  <div>
-    <h2 class="text-xl font-bold mb-4">Trailers</h2>
+  <div class="justify-content m-3">
+    <h2 class="text-xl font-bold">List of Trailers</h2>
+    <div class="mt-2">
+     <input v-model="searchTerm" placeholder=" Search for trailer name" @input="filterUnits" style="border:1px solid black; border-radius: 2px;" />
+    </div>
   </div>
-  <div class="list">
-  <ul v-if="pagedTrailers.length">
-    <li v-for="trailer in pagedTrailers" :key="trailer.id" class="mb-2">
-      <strong>{{ trailer.id}}. {{ trailer.name }}</strong> is a {{trailer.datatype }} 
-    </li>
-  </ul>
+  <div style="margin-left: 20px; display:inline-block">
+    <ul class="divide-y border-gray-900" v-if="pagedTrailers.length">
+      <li v-for="trailer in pagedTrailers" :key="trailer.id" class="flex justify-between gap-x-2 py-2 width 50%" >
+        <div class="flex min-w-0 gap-x-4">
+          <p class="text-sm/6 font-semibold text-gray-900">{{ trailer.id }}.</p>
+          <div class=" flex-auto">
+            <p class="text-sm/6 font-semibold text-gray-900">{{ trailer.name }}</p>
+            <p class="text-sm/6 text-gray-900">{{ trailer.datatype }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
   <p v-else>Loading trailers...</p>
 </div>
   <div class="center space-x-2">
+    <button
+      @click="firstPage"
+      :disabled="page === 1"
+      class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:bg-gray-100"
+    >
+      First
+    </button>
     <button
       @click="prevPage"
       :disabled="page === 1"
@@ -26,31 +42,35 @@
     >
       Next
     </button>
-
-    <!-- Pagination Controls -->
+    <button
+      @click="lastPage"
+      :disabled="page === totalPages"
+      class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:bg-gray-100"
+    >
+      Last
+    </button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "TrailerList",
   data() {
     return {
-      trailers: [], // All trailers
-      page: 1, // Current page number
-      limit: 30, // Items per page
+      trailers: [],
+      filteredUnits: [], 
+      searchTerm: '',
+      page: 1, 
+      limit: 30, 
     };
   },
   computed: {
-    // Calculate the trailers to display on the current page
     pagedTrailers() {
       const start = (this.page - 1) * this.limit;
       const end = this.page * this.limit;
-      return this.trailers.slice(start, end);
+      return this.filteredUnits.slice(start, end);
     },
-    // Calculate total number of pages
     totalPages() {
-      return Math.ceil(this.trailers.length / this.limit);
+      return Math.ceil(this.filteredUnits.length / this.limit);
     },
   },
   created() {
@@ -62,9 +82,16 @@ export default {
         const response = await fetch("/api/transport-units-trailer");
         const data = await response.json();
         this.trailers = data;
+        this.filteredUnits = this.trailers;
       } catch (error) {
         console.error("Error fetching trailers:", error);
       }
+    },
+    filterUnits() {
+      const term = this.searchTerm.toLowerCase();
+      this.filteredUnits = this.trailers.filter(unit =>
+        unit.name.toLowerCase().includes(term)
+      );
     },
     nextPage() {
       if (this.page < this.totalPages) {
@@ -76,19 +103,22 @@ export default {
         this.page--;
       }
     },
+    firstPage() {
+      if (this.page > 1) {
+        this.page = 1;
+      }
+    },
+    lastPage() {
+      if (this.page != this.totalPages) {
+        this.page = this.totalPages;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.list{
-  
-  padding: 20px 0;
-  margin-left: 20px;
-  text-align: left;
-}
 .center{
-  padding: 20px 0;
   text-align: center;
 }
 </style>

@@ -3,7 +3,6 @@
     <h1 class="text-2xl font-bold mb-4">Create a New Transport Unit</h1>
 
     <form @submit.prevent="createTransportUnit" class="space-y-4">
-      <!-- Name Input -->
       <div>
         <label for="name" class="block text-sm font-medium">Name</label>
         <input
@@ -16,7 +15,6 @@
         />
       </div>
 
-      <!-- Datatype Dropdown -->
       <div>
         <label for="datatype" class="block text-sm font-medium">Datatype</label>
         <select
@@ -31,7 +29,6 @@
         </select>
       </div>
 
-      <!-- Submit Button -->
       <div>
         <button
           type="submit"
@@ -42,9 +39,8 @@
       </div>
     </form>
 
-    <!-- Success Message -->
-    <div v-if="successMessage" class="mt-4 text-green-500">
-      {{ successMessage }}
+    <div v-if="successMessage" class="text-2xl mt-4 text-green-500">
+      {{ successMessage }} 
     </div>
   </div>
 </template>
@@ -85,6 +81,5 @@ export default {
 };
 </script>
 
-<style scoped>
-/* Optional styling */
+<style>
 </style>

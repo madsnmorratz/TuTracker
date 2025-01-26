@@ -13,7 +13,7 @@ class TransportUnitsSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $units = [];
 
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 30000; $i++) {
             $datatype = $faker->randomElement(['Trailer', 'Truck']);
             $name = $datatype === 'Trailer'
                 ? $this->generateTrailerName($faker)
