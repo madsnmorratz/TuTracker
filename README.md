@@ -15,7 +15,7 @@ Users can:
 - Search Functionality: Quickly find transport units by name.
 - Client-Side Interactions: Built with Vue.js for a seamless user experience.
 
-## Preqeruisites
+## Prerequisites
 
 Before running this project, ensure you have the following installed:
 
